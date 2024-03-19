@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to AI Chat Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        #chatbot-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+
+        #search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #search-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+
+        #search-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #result-container {
+            text-align: center;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+            padding: 10px;
+            background-color: #f7f7f7; 
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="chatbot-container">
+        <h2 style="text-align: center;">Welcome to AI Chat Bot</h2>
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Ask me anything...">
+            <button id="search-btn">Search</button>
+        </div>
+        <div id="result-container">
+            <p id="result"></p>
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById('search-btn').addEventListener('click', function() {
+            search();
+        });
+
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                search();
+            }
+        });
+
+        function search() {
+            var userQuery = document.getElementById('search-input').value;
+        
+            fetch('/get_result', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_query: userQuery
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var searchResult = data.result;
+                var resultContainer = document.getElementById('result');
+                resultContainer.innerText = searchResult;
+                
+                if (searchResult.trim() !== '') {
+                    resultContainer.style.height = '350px'; 
+                    resultContainer.style.overflowY = 'auto'; 
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'An error occurred. Please try again.';
+            });
+        
+        }
+        
+    </script>
+</body>
+</html>
