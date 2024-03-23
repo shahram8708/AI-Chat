@@ -149,7 +149,7 @@
                 var googleResult = data.google_result;
 
                 var resultContainer = document.getElementById('result');
-                resultContainer.innerHTML = `<strong>Result:</strong><br>${googleResult}<br><br><strong>Other Result:</strong><br>${wikiResult}<br><br><strong>Note : </strong>If there are two results here, and if one of them appears to be incorrect, please consider the one that is more likely to be correct. The upper one may be 100% accurate while the lower one may be 90% accurate.`;
+                resultContainer.innerHTML = `<strong>Result:</strong><br>${googleResult}<br><br><strong>Other Result:</strong><br>${wikiResult}<br><br><strong>Note:</strong><br>If there are two results here, and if one of them appears to be incorrect, please consider the one that is more likely to be correct. The upper one may be 100% accurate while the lower one may be 90% accurate.`;
             })
             .catch(error => {
                 console.error('Error:', error);
