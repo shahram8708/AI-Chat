@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import wikipedia
 import requests
+import re
 
 app = Flask(__name__)
 
@@ -37,9 +38,13 @@ def google_search(query):
     if 'items' in data:
         for item in data['items']:
             snippet = item.get('snippet', '')
-            search_results.append(snippet)
+            if not contains_date(snippet):
+                search_results.append(snippet)
     return search_results
 
+def contains_date(text):
+    date_regex = r'\b(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|\w+\s\d{1,2},?\s\d{4})\b'
+    return re.search(date_regex, text) is not None
 
 if __name__ == '__main__':
     app.run(debug=True)
