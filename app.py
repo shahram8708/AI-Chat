@@ -5,7 +5,7 @@ import re
 
 app = Flask(__name__)
 
-GOOGLE_API_KEY = 'AIzaSyA5YocXmTntv_LoGm_3ecZbHL-lIz7kmOY'
+GOOGLE_API_KEY = 'AIzaSyDxdLTyUowK86sjco6AhJZRdWFFEtwyu5Y'
 SEARCH_ENGINE_ID = 'b45dc313d50ac4cef'
 
 @app.route('/')
