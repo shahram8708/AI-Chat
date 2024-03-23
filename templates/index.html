@@ -114,42 +114,47 @@
 
     <script>
         document.getElementById('search-btn').addEventListener('click', function() {
-            search();
+            var userQuery = document.getElementById('search-input').value.trim();
+            if (userQuery === '') {
+                alert('Please enter a query.');
+                return;
+            }
+            search(userQuery);
         });
 
         document.getElementById('search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                search();
+                var userQuery = document.getElementById('search-input').value.trim();
+                if (userQuery === '') {
+                    alert('Please enter a query.');
+                    return;
+                }
+                search(userQuery);
             }
         });
 
-        function search() {
-            var userQuery = document.getElementById('search-input').value;
-        
+        function search(query) {
             fetch('/get_result', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_query: userQuery
+                    user_query: query
                 })
             })
             .then(response => response.json())
             .then(data => {
-                var searchResult = data.result;
+                var wikiResult = data.wikipedia_result;
+                var googleResult = data.google_result;
+
                 var resultContainer = document.getElementById('result');
-                resultContainer.innerText = searchResult;
-                
-                if (searchResult.trim() !== '') {
-                    resultContainer.style.height = 'auto'; 
-                }
+                resultContainer.innerHTML = `<strong>Result:</strong><br>${googleResult}<br><br><strong>Other Result:</strong><br>${wikiResult}<br><br><strong>Note : </strong>If there are two results here, and if one of them appears to be incorrect, please consider the one that is more likely to be correct. The upper one may be 100% accurate while the lower one may be 90% accurate.`;
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('result').innerText = 'An error occurred. Please try again.';
             });
-        
         }
     </script>
 </body>
