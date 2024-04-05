@@ -37,7 +37,9 @@ def google_search(query):
     search_results = []
     if 'items' in data:
         for item in data['items']:
-            search_results.append(item)
+            snippet = item.get('snippet', '')
+            if not contains_date(snippet):
+                search_results.append(snippet)
     return search_results
 
 def contains_date(text):
