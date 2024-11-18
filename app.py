@@ -5,8 +5,8 @@ import re
 
 app = Flask(__name__)
 
-GOOGLE_API_KEY = 'AIzaSyDxdLTyUowK86sjco6AhJZRdWFFEtwyu5Y'
-SEARCH_ENGINE_ID = 'b45dc313d50ac4cef'
+GOOGLE_API_KEY = 'GOOGLE_API_KEY'
+SEARCH_ENGINE_ID = 'SEARCH_ENGINE_ID'
 
 @app.route('/')
 def index():
